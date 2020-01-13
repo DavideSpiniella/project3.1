@@ -15,8 +15,12 @@
 simple Queue
 {
     parameters:
-        volatile double serviceTime @unit(s);
-        volatile int queue_size;
+        volatile double serviceTime1 @unit(s);
+        volatile double serviceTime2 @unit(s);
+        volatile double serviceTime3 @unit(s);
+        volatile double serviceTime4 @unit(s);
+        volatile double serviceTime5 @unit(s);
+        volatile double timeSlot @unit(s);
         volatile bool preemption;
         volatile int numberofpriority; 
         @display("i=block/queue;q=queue");

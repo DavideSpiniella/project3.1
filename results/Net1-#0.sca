@@ -1,319 +1,224 @@
 version 2
-run Net1-0-20200110-19:22:53-20345
+run Net1-0-20200113-14:09:56-3644
 attr configname Net1
-attr datetime 20200110-19:22:53
+attr datetime 20200113-14:09:56
 attr experiment Net1
 attr inifile omnetpp.ini
 attr iterationvars ""
 attr iterationvarsf ""
 attr measurement ""
 attr network Net
-attr processid 20345
+attr processid 3644
 attr repetition 0
 attr replication #0
 attr resultdir results
 attr runnumber 0
 attr seedset 0
-param **.gen.interArrivalTime exponential(0.5s)
-param **.sys.serviceTime exponential(0.4s)
-param **.sys.queue_size 15
-param **.gen.numberofpriority 10
-param **.sys.numberofpriority 10
+param **.gen.interArrivalTime1 exponential(0.2s)
+param **.gen.interArrivalTime2 exponential(0.3s)
+param **.gen.interArrivalTime3 exponential(0.4s)
+param **.gen.interArrivalTime4 exponential(0.5s)
+param **.gen.interArrivalTime5 exponential(0.6s)
+param **.sys.serviceTime1 exponential(0.3s)
+param **.sys.serviceTime2 exponential(0.4s)
+param **.sys.serviceTime3 exponential(0.5s)
+param **.sys.serviceTime4 exponential(0.6s)
+param **.sys.serviceTime5 exponential(0.7s)
+param **.gen.numberofpriority 5
+param **.sys.numberofpriority 5
 param **.sys.preemption true
 
-scalar Net.sys responseTime9:mean 6.7655626828722
+scalar Net.sys responseTime4:mean 1048.13008781
 attr interpolationmode none
 attr title "response time at end of service, mean"
 attr unit s
-scalar Net.sys responseTime9:max 77.522316413427
+scalar Net.sys responseTime4:max 2688.5385347269
 attr interpolationmode none
 attr title "response time at end of service, max"
 attr unit s
-scalar Net.sys queueingTime9:mean 7.2537992195404
+scalar Net.sys queueingTime4:mean 1010.812302491
 attr interpolationmode none
 attr title "queueing time at dequeue, mean"
 attr unit s
-scalar Net.sys queueingTime9:max 77.390615898164
+scalar Net.sys queueingTime4:max 3052.6421904309
 attr interpolationmode none
 attr title "queueing time at dequeue, max"
 attr unit s
-scalar Net.sys qlen9:timeavg 1.3055715792121
+scalar Net.sys qlen4:timeavg 618.01636376217
 attr interpolationmode sample-hold
 attr title "queue length, timeavg"
-scalar Net.sys qlen9:max 15
+scalar Net.sys qlen4:max 1241
 attr interpolationmode sample-hold
 attr title "queue length, max"
-scalar Net.sys responseTime8:mean 4.0556831378555
+scalar Net.sys responseTime3:mean 9.6495236980869
 attr interpolationmode none
 attr title "response time at end of service, mean"
 attr unit s
-scalar Net.sys responseTime8:max 55.436883510319
+scalar Net.sys responseTime3:max 100.63581889094
 attr interpolationmode none
 attr title "response time at end of service, max"
 attr unit s
-scalar Net.sys queueingTime8:mean 4.3135154098457
+scalar Net.sys queueingTime3:mean 9.6753726770782
 attr interpolationmode none
 attr title "queueing time at dequeue, mean"
 attr unit s
-scalar Net.sys queueingTime8:max 55.233902205371
+scalar Net.sys queueingTime3:max 100.50596402235
 attr interpolationmode none
 attr title "queueing time at dequeue, max"
 attr unit s
-scalar Net.sys qlen8:timeavg 0.73481687167109
+scalar Net.sys qlen3:timeavg 4.5744868946253
 attr interpolationmode sample-hold
 attr title "queue length, timeavg"
-scalar Net.sys qlen8:max 10
+scalar Net.sys qlen3:max 27
 attr interpolationmode sample-hold
 attr title "queue length, max"
-scalar Net.sys responseTime7:mean 2.3352818241288
+scalar Net.sys responseTime2:mean 2.0083626044194
 attr interpolationmode none
 attr title "response time at end of service, mean"
 attr unit s
-scalar Net.sys responseTime7:max 18.227617778475
+scalar Net.sys responseTime2:max 23.634883599252
 attr interpolationmode none
 attr title "response time at end of service, max"
 attr unit s
-scalar Net.sys queueingTime7:mean 2.5625778077681
+scalar Net.sys queueingTime2:mean 2.1866932994684
 attr interpolationmode none
 attr title "queueing time at dequeue, mean"
 attr unit s
-scalar Net.sys queueingTime7:max 17.386094479751
+scalar Net.sys queueingTime2:max 23.511885248124
 attr interpolationmode none
 attr title "queueing time at dequeue, max"
 attr unit s
-scalar Net.sys qlen7:timeavg 0.40806824799334
+scalar Net.sys qlen2:timeavg 0.76920090313674
 attr interpolationmode sample-hold
 attr title "queue length, timeavg"
-scalar Net.sys qlen7:max 7
+scalar Net.sys qlen2:max 11
 attr interpolationmode sample-hold
 attr title "queue length, max"
-scalar Net.sys responseTime6:mean 1.5651431102806
+scalar Net.sys responseTime1:mean 0.77883413728812
 attr interpolationmode none
 attr title "response time at end of service, mean"
 attr unit s
-scalar Net.sys responseTime6:max 16.572322139378
+scalar Net.sys responseTime1:max 5.648340304616
 attr interpolationmode none
 attr title "response time at end of service, max"
 attr unit s
-scalar Net.sys queueingTime6:mean 1.7896180417057
+scalar Net.sys queueingTime1:mean 0.82169641320489
 attr interpolationmode none
 attr title "queueing time at dequeue, mean"
 attr unit s
-scalar Net.sys queueingTime6:max 16.520597551305
+scalar Net.sys queueingTime1:max 5.324860919452
 attr interpolationmode none
 attr title "queueing time at dequeue, max"
 attr unit s
-scalar Net.sys qlen6:timeavg 0.24805281847836
+scalar Net.sys qlen1:timeavg 0.19076734194763
 attr interpolationmode sample-hold
 attr title "queue length, timeavg"
-scalar Net.sys qlen6:max 5
+scalar Net.sys qlen1:max 5
 attr interpolationmode sample-hold
 attr title "queue length, max"
-scalar Net.sys responseTime5:mean 1.2643920188656
+scalar Net.sys responseTime0:mean 0.35981318790464
 attr interpolationmode none
 attr title "response time at end of service, mean"
 attr unit s
-scalar Net.sys responseTime5:max 11.375301077134
+scalar Net.sys responseTime0:max 3.252685310792
 attr interpolationmode none
 attr title "response time at end of service, max"
 attr unit s
-scalar Net.sys queueingTime5:mean 1.4947600519024
+scalar Net.sys queueingTime0:mean 0.33880452903994
 attr interpolationmode none
 attr title "queueing time at dequeue, mean"
 attr unit s
-scalar Net.sys queueingTime5:max 10.240433966631
+scalar Net.sys queueingTime0:max 3.164348307868
 attr interpolationmode none
 attr title "queueing time at dequeue, max"
 attr unit s
-scalar Net.sys qlen5:timeavg 0.16515292054342
+scalar Net.sys qlen0:timeavg 0.035119297616058
 attr interpolationmode sample-hold
 attr title "queue length, timeavg"
-scalar Net.sys qlen5:max 5
+scalar Net.sys qlen0:max 4
 attr interpolationmode sample-hold
 attr title "queue length, max"
-scalar Net.sys responseTime4:mean 0.99389950807301
-attr interpolationmode none
-attr title "response time at end of service, mean"
-attr unit s
-scalar Net.sys responseTime4:max 7.95960768434
-attr interpolationmode none
-attr title "response time at end of service, max"
-attr unit s
-scalar Net.sys queueingTime4:mean 1.303990705982
-attr interpolationmode none
-attr title "queueing time at dequeue, mean"
-attr unit s
-scalar Net.sys queueingTime4:max 7.455352626792
-attr interpolationmode none
-attr title "queueing time at dequeue, max"
-attr unit s
-scalar Net.sys qlen4:timeavg 0.12218522558116
-attr interpolationmode sample-hold
-attr title "queue length, timeavg"
-scalar Net.sys qlen4:max 4
-attr interpolationmode sample-hold
-attr title "queue length, max"
-scalar Net.sys responseTime3:mean 0.76771831923092
-attr interpolationmode none
-attr title "response time at end of service, mean"
-attr unit s
-scalar Net.sys responseTime3:max 9.334625484141
-attr interpolationmode none
-attr title "response time at end of service, max"
-attr unit s
-scalar Net.sys queueingTime3:mean 0.99826457119975
-attr interpolationmode none
-attr title "queueing time at dequeue, mean"
-attr unit s
-scalar Net.sys queueingTime3:max 8.975182287157
-attr interpolationmode none
-attr title "queueing time at dequeue, max"
-attr unit s
-scalar Net.sys qlen3:timeavg 0.070986301248714
-attr interpolationmode sample-hold
-attr title "queue length, timeavg"
-scalar Net.sys qlen3:max 4
-attr interpolationmode sample-hold
-attr title "queue length, max"
-scalar Net.sys responseTime2:mean 0.69629685197594
-attr interpolationmode none
-attr title "response time at end of service, mean"
-attr unit s
-scalar Net.sys responseTime2:max 4.529839632811
-attr interpolationmode none
-attr title "response time at end of service, max"
-attr unit s
-scalar Net.sys queueingTime2:mean 0.88495328409119
-attr interpolationmode none
-attr title "queueing time at dequeue, mean"
-attr unit s
-scalar Net.sys queueingTime2:max 4.309121688245
-attr interpolationmode none
-attr title "queueing time at dequeue, max"
-attr unit s
-scalar Net.sys qlen2:timeavg 0.052474153159901
-attr interpolationmode sample-hold
-attr title "queue length, timeavg"
-scalar Net.sys qlen2:max 3
-attr interpolationmode sample-hold
-attr title "queue length, max"
-scalar Net.sys responseTime1:mean 0.53803312304669
-attr interpolationmode none
-attr title "response time at end of service, mean"
-attr unit s
-scalar Net.sys responseTime1:max 3.743841757586
-attr interpolationmode none
-attr title "response time at end of service, max"
-attr unit s
-scalar Net.sys queueingTime1:mean 0.72043446782672
-attr interpolationmode none
-attr title "queueing time at dequeue, mean"
-attr unit s
-scalar Net.sys queueingTime1:max 2.824088388548
-attr interpolationmode none
-attr title "queueing time at dequeue, max"
-attr unit s
-scalar Net.sys qlen1:timeavg 0.025530495271346
-attr interpolationmode sample-hold
-attr title "queue length, timeavg"
-scalar Net.sys qlen1:max 2
-attr interpolationmode sample-hold
-attr title "queue length, max"
-scalar Net.sys responseTime0:mean 0.42498206528802
-attr interpolationmode none
-attr title "response time at end of service, mean"
-attr unit s
-scalar Net.sys responseTime0:max 3.953193452035
-attr interpolationmode none
-attr title "response time at end of service, max"
-attr unit s
-scalar Net.sys queueingTime0:mean 0.36901494899776
-attr interpolationmode none
-attr title "queueing time at dequeue, mean"
-attr unit s
-scalar Net.sys queueingTime0:max 1.72901370729
-attr interpolationmode none
-attr title "queueing time at dequeue, max"
-attr unit s
-scalar Net.sys qlen0:timeavg 0.0070779832587743
-attr interpolationmode sample-hold
-attr title "queue length, timeavg"
-scalar Net.sys qlen0:max 2
-attr interpolationmode sample-hold
-attr title "queue length, max"
-scalar Net.sys busy:timeavg 0.81136023179747
+scalar Net.sys busy:timeavg 1
 attr interpolationmode sample-hold
 attr title "server busy state, timeavg"
-scalar Net.sink arrivedMsg:last 7261
+scalar Net.sink arrivedMsg:last 7737
 attr interpolationmode none
 attr title "number of arrived msg, last"
 statistic Net.sink lifetime:histogram
-field count 7261
-field mean 1.9551197451439
-field stddev 4.3154066473709
-field min 2.4228718e-05
-field max 77.522316413427
-field sum 14196.12446949
-field sqrsum 162956.1759584
+field count 7737
+field mean 79.706537522305
+field stddev 320.67209999562
+field min 4.5115983e-05
+field max 2688.5385347269
+field sum 616689.48081008
+field sqrsum 844651671.69769
 attr interpolationmode none
 attr title "lifetime of arrived msg, histogram"
 attr unit s
 bin	-inf	0
-bin	0	5253
-bin	1.6	902
-bin	3.2	371
-bin	4.8	245
-bin	6.4	130
-bin	8	85
-bin	9.6	61
-bin	11.2	50
-bin	12.8	33
-bin	14.4	22
-bin	16	17
-bin	17.6	10
-bin	19.2	19
-bin	20.8	8
-bin	22.4	8
-bin	24	8
-bin	25.6	4
-bin	27.2	1
-bin	28.8	4
-bin	30.4	3
-bin	32	5
-bin	33.6	2
-bin	35.2	2
-bin	36.8	0
-bin	38.4	2
-bin	40	1
-bin	41.6	0
-bin	43.2	1
-bin	44.8	2
-bin	46.4	0
-bin	48	1
-bin	49.6	1
-bin	51.2	1
-bin	52.8	1
-bin	54.4	1
-bin	56	0
-bin	57.6	0
-bin	59.2	1
-bin	60.8	3
-bin	62.4	0
-bin	64	0
-bin	65.6	1
-bin	67.2	0
-bin	68.8	0
-bin	70.4	0
-bin	72	1
-bin	73.6	0
-bin	75.2	0
-bin	76.8	1
-bin	78.4	0
-scalar Net.sink lifetime:mean 1.9551197451439
+bin	0	7148
+bin	48	46
+bin	96	7
+bin	144	7
+bin	192	2
+bin	240	29
+bin	288	11
+bin	336	23
+bin	384	2
+bin	432	1
+bin	480	1
+bin	528	2
+bin	576	7
+bin	624	16
+bin	672	37
+bin	720	74
+bin	768	25
+bin	816	17
+bin	864	4
+bin	912	19
+bin	960	22
+bin	1008	4
+bin	1056	6
+bin	1104	18
+bin	1152	9
+bin	1200	2
+bin	1248	3
+bin	1296	3
+bin	1344	6
+bin	1392	15
+bin	1440	10
+bin	1488	27
+bin	1536	27
+bin	1584	7
+bin	1632	7
+bin	1680	14
+bin	1728	5
+bin	1776	2
+bin	1824	13
+bin	1872	6
+bin	1920	1
+bin	1968	0
+bin	2016	0
+bin	2064	1
+bin	2112	13
+bin	2160	0
+bin	2208	13
+bin	2256	6
+bin	2304	0
+bin	2352	1
+bin	2400	1
+bin	2448	12
+bin	2496	1
+bin	2544	0
+bin	2592	3
+bin	2640	0
+bin	2688	1
+bin	2736	0
+scalar Net.sink lifetime:mean 79.706537522305
 attr interpolationmode none
 attr title "lifetime of arrived msg, mean"
 attr unit s
-scalar Net.sink lifetime:max 77.522316413427
+scalar Net.sink lifetime:max 2688.5385347269
 attr interpolationmode none
 attr title "lifetime of arrived msg, max"
 attr unit s
