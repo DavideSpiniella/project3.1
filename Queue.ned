@@ -29,8 +29,8 @@ simple Queue
         @signal[queueingTime*](type="simtime_t");
         @signal[responseTime*](type="simtime_t");
         
-        @statisticTemplate[qlen](title="queue length";record=vector,timeavg,max;interpolationmode=sample-hold);
-        @statistic[busy](title="server busy state";record=vector?,timeavg;interpolationmode=sample-hold);
+        @statisticTemplate[qlen](title="queue length";record=vector,timeavg,max,mean;interpolationmode=sample-hold);
+        @statistic[busy](title="server busy state";record=vector,timeavg;interpolationmode=sample-hold);
         @statisticTemplate[queueingTime](title="queueing time at dequeue";unit=s;record=vector,mean,max;interpolationmode=none);
         @statisticTemplate[responseTime](title="response time at end of service";unit=s;record=vector,mean,max;interpolationmode=none);
     
