@@ -126,7 +126,8 @@ void Queue::handleMessage(cMessage *msg)
         //Response time: time from msg arrival timestamp to time msg ends service (now)
         emit(responseTimeSignal[msgServiced->getSchedulingPriority()-1], simTime() - msgServiced->getTimestamp());
         //TODO: in questo caso spreco uno slot da vedere se implementarla diversamente
-                if (queue[endServiceMsg->getSchedulingPriority()-1].isEmpty()) { // Empty queue, server goes in IDLE
+        // in questo caso uso ancora msgServiced perchè sono della stessa classe
+                if (queue[msgServiced->getSchedulingPriority()-1].isEmpty()) { // Empty queue, server goes in IDLE
                         EV << "Empty queue, server goes IDLE" <<endl;
                         msgServiced = nullptr;
                         emit(busySignal, false);
@@ -135,7 +136,8 @@ void Queue::handleMessage(cMessage *msg)
                 {
                     EV << "now we are serving users of class "<< index << endl;
                     // prendo l' utente che devo servire dalla sua coda
-                    msgServiced = (cMessage *)queue[endServiceMsg->getSchedulingPriority()-1].pop();
+                    // in questo caso uso ancora msgServiced perchè sono della stessa classe
+                    msgServiced = (cMessage *)queue[msgServiced->getSchedulingPriority()-1].pop();
                     emit(qlenSignal[msgServiced->getSchedulingPriority()-1], queue[msgServiced->getSchedulingPriority()-1].getLength()); //Queue length changed, emit new length!
 
                     //Waiting time: time from msg arrival to time msg enters the server (now)
@@ -163,7 +165,7 @@ void Queue::handleMessage(cMessage *msg)
                 queue[index-1].insert(msgServiced);
                 // controllo se sono all'ultima classe se sono all'ultima riparto da 1
                 // altrimenti vado alla successiva
-                if(index==numberofSchedulingClasses){
+                if(index == numberofSchedulingClasses){
                     index=1;
                 }else{
                     index++;

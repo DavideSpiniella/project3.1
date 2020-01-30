@@ -1,115 +1,115 @@
-file 1150573 1579026264                                         
+file 2774314 1580418448                                         
 version 2
-run Net1-0-20200114-19:24:19-2396
+run Net1-0-20200130-22:07:13-21942
 attr configname Net1
-attr datetime 20200114-19:24:19
+attr datetime 20200130-22:07:13
 attr experiment Net1
 attr inifile omnetpp.ini
 attr iterationvars ""
 attr iterationvarsf ""
 attr measurement ""
 attr network Net
-attr processid 2396
+attr processid 21942
 attr repetition 0
 attr replication #0
 attr resultdir results
 attr runnumber 0
 attr seedset 0
-param **.gen.interArrivalTime1 exponential(0.8s)
-param **.gen.interArrivalTime2 exponential(0.9s)
-param **.gen.interArrivalTime3 exponential(0.7s)
-param **.gen.interArrivalTime4 exponential(0.6s)
-param **.gen.interArrivalTime5 exponential(0.5s)
+param **.gen.interArrivalTime1 exponential(0.17s)
+param **.gen.interArrivalTime2 exponential(0.20s)
+param **.gen.interArrivalTime3 exponential(0.13s)
+param **.gen.interArrivalTime4 exponential(0.25s)
+param **.gen.interArrivalTime5 exponential(0.15s)
 param **.sys.serviceTime1 exponential(0.3s)
 param **.sys.serviceTime2 exponential(0.4s)
 param **.sys.serviceTime3 exponential(0.5s)
 param **.sys.serviceTime4 exponential(0.6s)
-param **.sys.serviceTime5 exponential(0.7s)
-param **.sys.timeSlot 0.5s
-param **.gen.numberofpriority 5
-param **.sys.numberofpriority 5
+param **.sys.serviceTime5 exponential(0.2s)
+param **.sys.timeSlot 0.6s
+param **.gen.numberofSchedulingClasses 5
+param **.sys.numberofSchedulingClasses 5
 
 vector 0 Net.sys busy:vector ETV
 attr interpolationmode sample-hold
 attr title "server busy state, vector"
-vector 1 Net.sys qlen1:vector ETV
+vector 1 Net.sys qlen2:vector ETV
 attr interpolationmode sample-hold
 attr title "queue length, vector"
-vector 2 Net.sys responseTime3:vector ETV
+vector 2 Net.sys qlen0:vector ETV
+attr interpolationmode sample-hold
+attr title "queue length, vector"
+vector 3 Net.sys responseTime2:vector ETV
 attr interpolationmode none
 attr title "response time at end of service, vector"
 attr unit s
-vector 3 Net.sys queueingTime1:vector ETV
+vector 4 Net.sys queueingTime2:vector ETV
 attr interpolationmode none
 attr title "queueing time at dequeue, vector"
 attr unit s
-vector 4 Net.sink lifetime:vector ETV
+vector 5 Net.sink lifetime:vector ETV
 attr interpolationmode none
 attr title "lifetime of arrived msg, vector"
 attr unit s
-vector 5 Net.sink arrivedMsg:vector ETV
+vector 6 Net.sink arrivedMsg:vector ETV
 attr interpolationmode none
 attr title "number of arrived msg, vector"
-vector 6 Net.sys qlen0:vector ETV
+vector 7 Net.sys qlen4:vector ETV
 attr interpolationmode sample-hold
 attr title "queue length, vector"
-vector 7 Net.sys responseTime2:vector ETV
+vector 8 Net.sys qlen1:vector ETV
+attr interpolationmode sample-hold
+attr title "queue length, vector"
+vector 9 Net.sys responseTime3:vector ETV
 attr interpolationmode none
 attr title "response time at end of service, vector"
-attr unit s
-vector 8 Net.sys responseTime0:vector ETV
-attr interpolationmode none
-attr title "response time at end of service, vector"
-attr unit s
-vector 9 Net.sys queueingTime0:vector ETV
-attr interpolationmode none
-attr title "queueing time at dequeue, vector"
 attr unit s
 vector 10 Net.sys responseTime1:vector ETV
 attr interpolationmode none
 attr title "response time at end of service, vector"
 attr unit s
-vector 11 Net.sys qlen2:vector ETV
-attr interpolationmode sample-hold
-attr title "queue length, vector"
-vector 12 Net.sys qlen4:vector ETV
-attr interpolationmode sample-hold
-attr title "queue length, vector"
+vector 11 Net.sys queueingTime1:vector ETV
+attr interpolationmode none
+attr title "queueing time at dequeue, vector"
+attr unit s
+vector 12 Net.sys responseTime4:vector ETV
+attr interpolationmode none
+attr title "response time at end of service, vector"
+attr unit s
 vector 13 Net.sys queueingTime4:vector ETV
 attr interpolationmode none
 attr title "queueing time at dequeue, vector"
 attr unit s
-vector 14 Net.sys responseTime4:vector ETV
+vector 14 Net.sys qlen3:vector ETV
+attr interpolationmode sample-hold
+attr title "queue length, vector"
+vector 15 Net.sys responseTime0:vector ETV
 attr interpolationmode none
 attr title "response time at end of service, vector"
 attr unit s
-vector 15 Net.sys queueingTime2:vector ETV
+vector 16 Net.sys queueingTime0:vector ETV
 attr interpolationmode none
 attr title "queueing time at dequeue, vector"
 attr unit s
-vector 16 Net.sys qlen3:vector ETV
-attr interpolationmode sample-hold
-attr title "queue length, vector"
 vector 17 Net.sys queueingTime3:vector ETV
 attr interpolationmode none
 attr title "queueing time at dequeue, vector"
 attr unit s
-0	3074 80246 0 22611 0 3596.948140326656 2968 0 1 1484 1484
-1	83320 49545 4 22635 0.477524702739 3598.947986973852 1822 0 12 3915 17573
-2	132865 40488 5 22604 0.53913623309 3595.795346114147 1001 4.4219801e-05 197.80884363699 16718.770648079 858655.61566287
-3	173353 43475 5 22635 0.53913623309 3598.947986973852 1077 0.020670877334 77.101822204722 9092.4230240236 184957.7785576
-4	216828 205064 6 22640 0.53913623309 3599.593013531789 5088 4.4219801e-05 506.03461043098 75803.027773135 6142506.0485276
-5	421892 152020 6 22640 0.53913623309 3599.593013531789 5088 1 5088 12946416 43918558544
-6	573912 41966 11 22638 2.254118577012 3599.501419794983 1549 0 7 1996 5054
-7	615878 41196 12 22639 2.583635052924 3599.593013531789 1024 0.005108478972 105.88082256836 8148.0302805316 187131.71813126
-8	657074 40462 20 22596 4.322705711719 3595.041657174895 1010 0.001127773342 29.558459923469 2793.1353721699 21261.708716329
-9	697536 34316 20 22629 4.322705711719 3598.447986973852 857 0.005012757357 29.526583475559 3194.9743116677 24799.540052264
-10	731852 42596 24 22618 4.698451839588 3597.444653166688 1034 0.001903525322 77.242189088044 6486.3242632455 134346.94945333
-11	774448 53225 29 22636 5.110706287859 3599.447986973852 1893 0 13 4957 22861
-12	827673 62043 31 22628 5.151575556224 3598.268830330167 2164 0 38 27638 533140
-13	889716 59214 36 22628 7.002472538167 3598.268830330167 1414 0.065296937037 505.99774018171 82602.098218639 10515500.329019
-14	948930 42374 40 22629 7.457084981943 3598.447986973852 1019 0.001241771806 506.03461043098 41656.767209109 4941110.0565639
-15	991304 47722 48 22636 9.616157201379 3599.447986973852 1154 0.009503652367 105.79635140042 12638.627013965 301073.91490423
-16	1039026 57263 136 22639 28.911887607954 3599.593013531789 2025 0 19 9922 85576
-17	1096289 54283 145 22639 30.151613845415 3599.593013531789 1303 0.013584604918 197.46723297907 28969.719179408 1469288.7460947
+0	3099 560 0 747 0 47.752535387576 26 0 1 13 13
+1	3659 155929 4 60795 0.103463685594 3598.374176045996 5208 0 2600 6579002 11336830064
+2	159588 192619 6 60797 0.26673468414 3598.4873916491 6549 0 1010 3812147 2691218517
+3	352207 44564 7 60418 0.449280194242 3575.98671322421 1081 0.449280194242 3167.6309543563 1204411.3558685 1875521369.8475
+4	396771 62995 7 60740 0.449280194242 3596.431572456442 1528 0.345816508648 3167.5173670224 1708504.7175429 2672833008.6056
+5	459766 463528 8 60813 0.449280194242 3599.762474652587 11230 0.082412819393 3167.6309543563 5546359.0782595 5791290045.7236
+6	923294 341750 8 60813 0.449280194242 3599.762474652587 11230 1 11230 63062065 472145680655
+7	1265044 199120 10 60763 0.731635737159 3597.662856193824 6762 0 1215 3819146 2917266204
+8	1464164 171336 16 60807 1.353346264927 3599.291418064572 5743 0 2016 5665726 7622344722
+9	1635500 143500 19 60812 1.595314881971 3599.762474652587 3479 0.12988926965 106.30648302211 79867.621846079 2236060.9455142
+10	1779000 69764 23 60625 1.901858834348 3589.449414800069 1652 0.127342456337 3007.5268727472 1483040.1917724 1876484034.8372
+11	1848764 87980 23 60731 1.901858834348 3595.831572456442 2082 0.170716396021 3007.5002635118 1868637.9978091 2353204438.7088
+12	1936744 103883 45 60716 3.65627595593 3594.631572456442 2458 0.082412819393 2508.118323487 1298643.497234 958279145.07589
+13	2040627 131587 45 60716 3.65627595593 3594.631572456442 3111 2.924640218771 2507.8528565955 1642037.231987 1208357699.2389
+14	2172214 211427 56 60812 4.344876414977 3599.762474652587 7206 0 52 168920 4669974
+15	2383641 108486 110 60604 8.612780370921 3588.386484945812 2560 0.302666152926 2139.2912035057 1480396.4115385 1078769435.0174
+16	2492127 126344 110 60720 8.612780370921 3595.231572456442 2981 0.109531852445 2150.8351871349 1711321.0349445 1242959752.2213
+17	2618471 155842 155 60812 11.087851115148 3599.762474652587 3689 2.10471584875 106.30127474638 83996.174577702 2336781.8641973
 
