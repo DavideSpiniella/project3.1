@@ -9,7 +9,10 @@ class Source : public cSimpleModule
   private:
     cMessage *sendMessageEvent;
     int nbGenMessages;
-    int priority;
+    int schedulingClasses;
+    int numberofSchedulingClasses;
+    // scelgo casualmente uno degli arrival time disponibili
+    int * arrivalTime;
 
   public:
     Source();
@@ -36,21 +39,29 @@ void Source::initialize()
 {
     sendMessageEvent = new cMessage("sendMessageEvent");
     scheduleAt(simTime(), sendMessageEvent);
-    priority = 0;
+    schedulingClasses = 0;
     nbGenMessages = 0;
+    // prelevo il parametro
+    numberofSchedulingClasses=par("numberofSchedulingClasses");
+    // così dichiaro l'array con una posizione per ogni classe
+    arrivalTime = (int*) malloc(sizeof(int) * numberofSchedulingClasses);
+    // per ogni classe scelgo casualmente uno degli arrival time disponibili
+    for (int i = 1; i <= numberofSchedulingClasses ; i++){
+        arrivalTime[i] = rand()%5+1;
+    }
 }
 
 void Source::handleMessage(cMessage *msg)
 {
     ASSERT(msg == sendMessageEvent);
-    int n=par("numberofpriority");
-    priority = rand()%n+1;
+    // scelgo casualmente una delle classi disponibili
+    schedulingClasses = rand()%numberofSchedulingClasses+1;
     char msgname[20];
     sprintf(msgname,"message-%d", ++nbGenMessages);
     cMessage *message = new cMessage(msgname);
-    message->setSchedulingPriority(priority);
+    message->setSchedulingPriority(schedulingClasses);
     send(message, "out");
     char param[20];
-    sprintf(param, "interArrivalTime%d", priority);
+    sprintf(param, "interArrivalTime%d", arrivalTime[schedulingClasses]);
     scheduleAt(simTime()+par(param).doubleValue(), sendMessageEvent);
 }

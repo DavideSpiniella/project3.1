@@ -21,7 +21,7 @@ simple Source
         volatile double interArrivalTime4 @unit(s);
         volatile double interArrivalTime5 @unit(s);
         
-        volatile int numberofpriority;
+        volatile int numberofSchedulingClasses;
         @display("i=block/source");
     gates:
         output out;

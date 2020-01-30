@@ -21,7 +21,7 @@ simple Queue
         volatile double serviceTime4 @unit(s);
         volatile double serviceTime5 @unit(s);
         volatile double timeSlot @unit(s);
-        volatile int numberofpriority; 
+        volatile int numberofSchedulingClasses; 
         @display("i=block/queue;q=queue");
         
         @signal[qlen*](type="long");
