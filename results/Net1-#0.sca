@@ -1,14 +1,14 @@
 version 2
-run Net1-0-20200130-22:07:13-21942
+run Net1-0-20200131-14:00:11-2006
 attr configname Net1
-attr datetime 20200130-22:07:13
+attr datetime 20200131-14:00:11
 attr experiment Net1
 attr inifile omnetpp.ini
 attr iterationvars ""
 attr iterationvarsf ""
 attr measurement ""
 attr network Net
-attr processid 21942
+attr processid 2006
 attr repetition 0
 attr replication #0
 attr resultdir results

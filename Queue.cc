@@ -10,13 +10,16 @@ class Queue : public cSimpleModule
     cMessage *msgServiced;
     cMessage *endServiceMsg;
     cMessage *endSlotClassMsg;
+    //  variabili service time e slot time
+    simtime_t serviceTime;
+    simtime_t slotTime;
     //one queue for each scheduling class
     cQueue * queue;
     //number of classes
     int numberofSchedulingClasses;
     // index per scorrere le classi dello scheduler
     int index;
-    int * serviceTime;
+    int * serviceTimes;
     char name[10];
     char param[20];
     char signalname[20];
@@ -67,7 +70,7 @@ void Queue::initialize()
     // queue for each scheduling classes
     queue = new cQueue[numberofSchedulingClasses];
     // così dichiaro l'array con una posizione per ogni classe
-    serviceTime = (int*) malloc(sizeof(int) * numberofSchedulingClasses);
+    serviceTimes = (int*) malloc(sizeof(int) * numberofSchedulingClasses);
     // serviceTime = serviceTime[numberofSchedulingClasses];
     // signal for each scheduler class
     qlenSignal = new simsignal_t[numberofSchedulingClasses];
@@ -83,7 +86,7 @@ void Queue::initialize()
         // set the name of each queue
         queue[i].setName(name);
         // per ogni classe scelgo un service time casualmente tra quelli disponibili
-        serviceTime[i]=rand()%5+1;
+        serviceTimes[i]=rand()%5+1;
         // I register the signals
         // register qlen signal for each class
         sprintf(signalname,"qlen%d", i);
@@ -106,10 +109,8 @@ void Queue::initialize()
         ev->addResultRecorders(this, responseTimeSignal[i], statisticName, statisticTemplateResponseTime);
     }
 
-    //qlenSignal = registerSignal("qlen");
     busySignal = registerSignal("busy");
-    //queueingTimeSignal = registerSignal("queueingTime");
-    //responseTimeSignal = registerSignal("responseTime");
+
 
     emit(busySignal, false);
 }
@@ -125,9 +126,8 @@ void Queue::handleMessage(cMessage *msg)
         cancelEvent(endSlotClassMsg);
         //Response time: time from msg arrival timestamp to time msg ends service (now)
         emit(responseTimeSignal[msgServiced->getSchedulingPriority()-1], simTime() - msgServiced->getTimestamp());
-        //TODO: in questo caso spreco uno slot da vedere se implementarla diversamente
         // in questo caso uso ancora msgServiced perchè sono della stessa classe
-                if (queue[msgServiced->getSchedulingPriority()-1].isEmpty()) { // Empty queue, server goes in IDLE
+                if (queue[msgServiced->getSchedulingPriority()-1].isEmpty()) { // Empty queue of this class server goes in IDLE
                         EV << "Empty queue, server goes IDLE" <<endl;
                         msgServiced = nullptr;
                         emit(busySignal, false);
@@ -145,11 +145,11 @@ void Queue::handleMessage(cMessage *msg)
 
                     EV << "Starting service of " << msgServiced->getName() << " of class "<< msgServiced->getSchedulingPriority() << endl;
                     // scelgo il service time corrispondente alla mia classe
-                    sprintf(param, "serviceTime%d", serviceTime[msgServiced->getSchedulingPriority()-1]);
-                    simtime_t serviceTime = par(param);
+                    sprintf(param, "serviceTime%d", serviceTimes[msgServiced->getSchedulingPriority()-1]);
+                    serviceTime = par(param);
                     //scheduling a self message of end of service
                     scheduleAt(simTime()+serviceTime, endServiceMsg);
-                    simtime_t slotTime=par("timeSlot");
+                    slotTime=par("timeSlot");
                     //scheduling a self message of end of slot
                     scheduleAt(simTime()+slotTime, endSlotClassMsg);
 
@@ -170,34 +170,33 @@ void Queue::handleMessage(cMessage *msg)
                 }else{
                     index++;
                 }
-                //TODO: in questo caso spreco uno slot da vedere se implementarla diversamente
-                        if (queue[index-1].isEmpty()) { // Empty queue, server goes in IDLE
-                                EV << "Empty queue, server goes IDLE" <<endl;
-                                msgServiced = nullptr;
-                                emit(busySignal, false);
-                        }
-                        else
-                        {
-                            EV << "now we are serving users of class "<< index << endl;
-                            // prendo l' utente che devo servire dalla sua coda
-                            msgServiced = (cMessage *)queue[index-1].pop();
-                            emit(qlenSignal[index-1], queue[index-1].getLength()); //Queue length changed, emit new length!
+                if (queue[index-1].isEmpty()) { // Empty queue of this class, server goes in IDLE
+                        EV << "Empty queue, server goes IDLE" <<endl;
+                        msgServiced = nullptr;
+                        emit(busySignal, false);
+                }
+                else
+                {
+                    EV << "now we are serving users of class "<< index << endl;
+                    // prendo l' utente che devo servire dalla sua coda
+                    msgServiced = (cMessage *)queue[index-1].pop();
+                    emit(qlenSignal[index-1], queue[index-1].getLength()); //Queue length changed, emit new length!
 
-                            //Waiting time: time from msg arrival to time msg enters the server (now)
-                            emit(queueingTimeSignal[msgServiced->getSchedulingPriority()-1], simTime() - msgServiced->getTimestamp());
+                    // Waiting time: time from msg arrival to time msg enters the server (now)
+                    emit(queueingTimeSignal[msgServiced->getSchedulingPriority()-1], simTime() - msgServiced->getTimestamp());
 
-                            EV << "Starting service of " << msgServiced->getName() << " of class "<< msgServiced->getSchedulingPriority() << endl;
-                            // scelgo il service time corrispondente alla mia classe
-                            sprintf(param, "serviceTime%d", serviceTime[msgServiced->getSchedulingPriority()-1]);
-                            simtime_t serviceTime = par(param);
-                            //scheduling a self message of end of service
-                            scheduleAt(simTime()+serviceTime, endServiceMsg);
-                            simtime_t slotTime=par("timeSlot");
-                            //scheduling a self message of end of slot
-                            scheduleAt(simTime()+slotTime, endSlotClassMsg);
+                    EV << "Starting service of " << msgServiced->getName() << " of class "<< msgServiced->getSchedulingPriority() << endl;
+                    // scelgo il service time corrispondente alla mia classe
+                    sprintf(param, "serviceTime%d", serviceTimes[msgServiced->getSchedulingPriority()-1]);
+                    serviceTime = par(param);
+                    //scheduling a self message of end of service
+                    scheduleAt(simTime()+serviceTime, endServiceMsg);
+                    slotTime=par("timeSlot");
+                    //scheduling a self message of end of slot
+                    scheduleAt(simTime()+slotTime, endSlotClassMsg);
 
 
-                        }
+                }
 
     }
     else { // Data msg has arrived
@@ -211,8 +210,8 @@ void Queue::handleMessage(cMessage *msg)
 
                 EV << "Starting service of " << msgServiced->getName() <<" with class " << msgServiced->getSchedulingPriority() << endl;
                 // scelgo il service time corrispondente alla mia classe
-                sprintf(param, "serviceTime%d", serviceTime[msgServiced->getSchedulingPriority()-1]);
-                simtime_t serviceTime = par(param);;
+                sprintf(param, "serviceTime%d", serviceTimes[msgServiced->getSchedulingPriority()-1]);
+                serviceTime = par(param);;
                 scheduleAt(simTime()+serviceTime, endServiceMsg);
                 emit(busySignal, true);
             }
