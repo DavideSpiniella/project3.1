@@ -62,6 +62,7 @@ Queue::~Queue()
 void Queue::initialize()
 {
     // inizializzo l'indice delle classi dello scheduler
+    // (per convenzione parte da 1)
     index=1;
     endServiceMsg = new cMessage("end-service");
     endSlotClassMsg= new cMessage("end-slot");
@@ -71,7 +72,10 @@ void Queue::initialize()
     queue = new cQueue[numberofSchedulingClasses];
     // così dichiaro l'array con una posizione per ogni classe
     serviceTimes = (int*) malloc(sizeof(int) * numberofSchedulingClasses);
-    // serviceTime = serviceTime[numberofSchedulingClasses];
+    // inizializzo la variabile slot time
+    slotTime=par("timeSlot");
+    // scheduling a self message of end of the first slot
+    scheduleAt(simTime()+slotTime, endSlotClassMsg);
     // signal for each scheduler class
     qlenSignal = new simsignal_t[numberofSchedulingClasses];
     queueingTimeSignal = new simsignal_t[numberofSchedulingClasses];
@@ -121,9 +125,6 @@ void Queue::handleMessage(cMessage *msg)
 
         EV << "Completed service of " << msgServiced->getName() << endl;
         send(msgServiced, "out");
-        // ho finito il servizio prima della fine dello slot quindi cancello l'evento fine
-        // dello slot
-        cancelEvent(endSlotClassMsg);
         //Response time: time from msg arrival timestamp to time msg ends service (now)
         emit(responseTimeSignal[msgServiced->getSchedulingPriority()-1], simTime() - msgServiced->getTimestamp());
         // in questo caso uso ancora msgServiced perchè sono della stessa classe
@@ -149,20 +150,19 @@ void Queue::handleMessage(cMessage *msg)
                     serviceTime = par(param);
                     //scheduling a self message of end of service
                     scheduleAt(simTime()+serviceTime, endServiceMsg);
-                    slotTime=par("timeSlot");
-                    //scheduling a self message of end of slot
-                    scheduleAt(simTime()+slotTime, endSlotClassMsg);
 
 
                 }
     }
     else if(msg==endSlotClassMsg){
 
-        EV << "finish of slot " << msgServiced->getSchedulingPriority() << endl;
+        EV << "finish of slot " << index << endl;
                 // togliamo il messaggio dal servizio, lo rimettiamo nella sua coda e mettiamo
                 // in servizio il messaggio della classe successiva
-                cancelEvent(endServiceMsg);
-                queue[index-1].insert(msgServiced);
+                if(msgServiced){
+                    cancelEvent(endServiceMsg);
+                    queue[index-1].insert(msgServiced);
+                }
                 // controllo se sono all'ultima classe se sono all'ultima riparto da 1
                 // altrimenti vado alla successiva
                 if(index == numberofSchedulingClasses){
@@ -189,31 +189,36 @@ void Queue::handleMessage(cMessage *msg)
                     // scelgo il service time corrispondente alla mia classe
                     sprintf(param, "serviceTime%d", serviceTimes[msgServiced->getSchedulingPriority()-1]);
                     serviceTime = par(param);
-                    //scheduling a self message of end of service
+                    // scheduling a self message of end of service
                     scheduleAt(simTime()+serviceTime, endServiceMsg);
-                    slotTime=par("timeSlot");
-                    //scheduling a self message of end of slot
-                    scheduleAt(simTime()+slotTime, endSlotClassMsg);
-
-
                 }
+                // scheduling a self message of end of slot
+                scheduleAt(simTime()+slotTime, endSlotClassMsg);
 
     }
     else { // Data msg has arrived
 
         // Setting arrival timestamp as msg field
         msg->setTimestamp();
-            if (!msgServiced) { // No message in service (server IDLE) ==> No queue ==> Direct service
-
-                msgServiced = msg;
-                //emit(queueingTimeSignal, SIMTIME_ZERO);
-
-                EV << "Starting service of " << msgServiced->getName() <<" with class " << msgServiced->getSchedulingPriority() << endl;
-                // scelgo il service time corrispondente alla mia classe
-                sprintf(param, "serviceTime%d", serviceTimes[msgServiced->getSchedulingPriority()-1]);
-                serviceTime = par(param);;
-                scheduleAt(simTime()+serviceTime, endServiceMsg);
-                emit(busySignal, true);
+            if (!msgServiced) {
+                if(msg->getSchedulingPriority() == index){
+                    msgServiced = msg;
+                    EV << "Starting service of " << msgServiced->getName() <<" with class " << msgServiced->getSchedulingPriority() << endl;
+                    // scelgo il service time corrispondente alla mia classe
+                    sprintf(param, "serviceTime%d", serviceTimes[msgServiced->getSchedulingPriority()-1]);
+                    serviceTime = par(param);;
+                    scheduleAt(simTime()+serviceTime, endServiceMsg);
+                    emit(busySignal, true);
+                }
+                else{
+                    EV << "message " << msg->getName() << " enter in the queue because is not it's turn" <<endl;
+                    // inserisco il messaggio che mi è arrivato nella sua coda
+                    queue[msg->getSchedulingPriority()-1].insert(msg);
+                    // Queue length changed, emit new length!
+                    emit(qlenSignal[msg->getSchedulingPriority()-1], queue[msg->getSchedulingPriority()-1].getLength());
+                    EV << "Empty queue, server goes IDLE" <<endl;
+                    emit(busySignal, false);
+                }
             }
             else {  // Message in service (server BUSY) ==> Queuing
                 for(int i=0; i<numberofSchedulingClasses; i++){
@@ -222,7 +227,8 @@ void Queue::handleMessage(cMessage *msg)
                     if(msg->getSchedulingPriority()-1==i){
                             EV << msg->getName() << " enters queue"<< endl;
                             queue[i].insert(msg);
-                            emit(qlenSignal[i], queue[i].getLength()); //Queue length changed, emit new length!
+                            // Queue length changed, emit new length!
+                            emit(qlenSignal[i], queue[i].getLength());
                             break;
                     }
                 }
